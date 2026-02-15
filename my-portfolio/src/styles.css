@@ -1,0 +1,55 @@
+/* Global styles */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#root {
+  display: flex;
+  flex-direction: column;
+  /* min-height: 100vh; */
+}
+
+main {
+  flex: 1;
+}
+
+/* Minimal global scrollbar */
+:root {
+  scrollbar-width: thin;
+  scrollbar-color: #6b7cff #0b0f1a;
+}
+
+*::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+*::-webkit-scrollbar-track {
+  background: #0b0f1a;
+  border-radius: 999px;
+}
+
+*::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #7df9ff, #6b7cff);
+  border-radius: 999px;
+  border: 2px solid #0b0f1a;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #a2ffff, #8c8eff);
+}
