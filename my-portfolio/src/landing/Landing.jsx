@@ -298,7 +298,7 @@ function useGlitch(text) {
    - `shrink` prop controls whether this card should shrink
      when the OTHER card is hovered
    ============================================================ */
-function EntryCard({ title, description, cardTheme, isCyber, onClick, animClass, shrink }) {
+function EntryCard({ title, description, cardTheme, isCyber, onClick, animClass, shrink, isMobile }) {
   const [hover, setHover] = useState(false);
   const { accent, cardBg, cardBorder, cardGlow, cardGlowHover, textPrimary, textSub, font } = cardTheme;
 
@@ -326,11 +326,11 @@ function EntryCard({ title, description, cardTheme, isCyber, onClick, animClass,
         borderRadius: 18,
         overflow: "hidden",
         cursor: "pointer",
-        padding: "clamp(24px, 4vw, 34px) clamp(20px, 3vw, 30px)",
+        padding: isMobile ? "18px 14px" : "clamp(24px, 4vw, 34px) clamp(20px, 3vw, 30px)",
         background: hover ? cardBg : "rgba(255,255,255,0.03)",
         border: `1px solid ${hover ? cardBorder : "rgba(255,255,255,0.07)"}`,
         boxShadow: hover ? cardGlowHover : cardGlow,
-        transform: `translateY(${translateY}px)`,
+        transform: isMobile ? "translateY(0)" : `translateY(${translateY}px)`,
         opacity,
         transition:
           "transform 0.4s cubic-bezier(.4,0,.2,1), " +
@@ -338,7 +338,7 @@ function EntryCard({ title, description, cardTheme, isCyber, onClick, animClass,
           "background 0.3s ease, " +
           "border-color 0.3s ease, " +
           "box-shadow 0.35s ease",
-        minHeight: 240,
+        minHeight: isMobile ? "auto" : 240,
       }}
     >
       {/* top accent bar */}
@@ -350,20 +350,25 @@ function EntryCard({ title, description, cardTheme, isCyber, onClick, animClass,
       }} />
 
       {/* corner brackets */}
-      <div style={{ position:"absolute", top:10, left:10, width:22, height:22, borderTop:`2px solid ${hover ? accent+"70" : accent+"22"}`, borderLeft:`2px solid ${hover ? accent+"70" : accent+"22"}`, borderRadius:"5px 0 0 0", transition:"border-color 0.3s ease", pointerEvents:"none" }} />
-      <div style={{ position:"absolute", top:10, right:10, width:22, height:22, borderTop:`2px solid ${hover ? accent+"70" : accent+"22"}`, borderRight:`2px solid ${hover ? accent+"70" : accent+"22"}`, borderRadius:"0 5px 0 0", transition:"border-color 0.3s ease", pointerEvents:"none" }} />
-      <div style={{ position:"absolute", bottom:10, left:10, width:22, height:22, borderBottom:`2px solid ${hover ? accent+"70" : accent+"22"}`, borderLeft:`2px solid ${hover ? accent+"70" : accent+"22"}`, borderRadius:"0 0 0 5px", transition:"border-color 0.3s ease", pointerEvents:"none" }} />
-      <div style={{ position:"absolute", bottom:10, right:10, width:22, height:22, borderBottom:`2px solid ${hover ? accent+"70" : accent+"22"}`, borderRight:`2px solid ${hover ? accent+"70" : accent+"22"}`, borderRadius:"0 0 5px 0", transition:"border-color 0.3s ease", pointerEvents:"none" }} />
+      {!isMobile && (
+        <>
+          <div style={{ position:"absolute", top:10, left:10, width:22, height:22, borderTop:`2px solid ${hover ? accent+"70" : accent+"22"}`, borderLeft:`2px solid ${hover ? accent+"70" : accent+"22"}`, borderRadius:"5px 0 0 0", transition:"border-color 0.3s ease", pointerEvents:"none" }} />
+          <div style={{ position:"absolute", top:10, right:10, width:22, height:22, borderTop:`2px solid ${hover ? accent+"70" : accent+"22"}`, borderRight:`2px solid ${hover ? accent+"70" : accent+"22"}`, borderRadius:"0 5px 0 0", transition:"border-color 0.3s ease", pointerEvents:"none" }} />
+          <div style={{ position:"absolute", bottom:10, left:10, width:22, height:22, borderBottom:`2px solid ${hover ? accent+"70" : accent+"22"}`, borderLeft:`2px solid ${hover ? accent+"70" : accent+"22"}`, borderRadius:"0 0 0 5px", transition:"border-color 0.3s ease", pointerEvents:"none" }} />
+          <div style={{ position:"absolute", bottom:10, right:10, width:22, height:22, borderBottom:`2px solid ${hover ? accent+"70" : accent+"22"}`, borderRight:`2px solid ${hover ? accent+"70" : accent+"22"}`, borderRadius:"0 0 5px 0", transition:"border-color 0.3s ease", pointerEvents:"none" }} />
+        </>
+      )}
 
       {/* icon + label */}
       <div style={{ display:"flex", alignItems:"center", gap:10, marginBottom: 14 }}>
         <div style={{
-          width: 38, height: 38,
+          width: isMobile ? 32 : 38,
+          height: isMobile ? 32 : 38,
           borderRadius: 11,
           background: hover ? accent + "22" : accent + "0c",
           border: `1px solid ${hover ? accent + "45" : accent + "18"}`,
           display:"flex", alignItems:"center", justifyContent:"center",
-          fontSize: 18,
+          fontSize: isMobile ? 16 : 18,
           transition: "background 0.3s ease, border-color 0.3s ease",
         }}>
           {isCyber ? "⬡" : "◎"}
@@ -383,7 +388,7 @@ function EntryCard({ title, description, cardTheme, isCyber, onClick, animClass,
 
       {/* title */}
       <h3 style={{
-        fontSize: "clamp(20px, 3.4vw, 24px)",
+        fontSize: isMobile ? "clamp(16px, 4vw, 18px)" : "clamp(20px, 3.4vw, 24px)",
         fontWeight: 700,
         color: hover ? "#fff" : textPrimary,
         fontFamily: font,
@@ -396,7 +401,7 @@ function EntryCard({ title, description, cardTheme, isCyber, onClick, animClass,
 
       {/* description */}
       <p style={{
-        fontSize: "clamp(13px, 1.7vw, 14px)",
+        fontSize: isMobile ? "clamp(12px, 2vw, 13px)" : "clamp(13px, 1.7vw, 14px)",
         color: hover ? textSub.replace("0.6", "0.75") : textSub,
         lineHeight: 1.75,
         fontFamily: font,
@@ -445,6 +450,13 @@ function EntryCard({ title, description, cardTheme, isCyber, onClick, animClass,
 export default function Landing() {
   const navigate = useNavigate();
   const [hovered, setHovered] = useState(null); // null | "cyber" | "void"
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth < 768);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   const theme =
     hovered === "cyber" ? THEMES.cyber
@@ -461,7 +473,8 @@ export default function Landing() {
       display: "flex",
       alignItems: "center",
       justifyContent: "center",
-      px: 2,
+      px: isMobile ? 3 : 2,
+      py: isMobile ? 4 : 2,
       backgroundImage: theme.bgGradient,
       transition: "background-color 0.5s ease",
       position: "relative",
@@ -482,6 +495,7 @@ export default function Landing() {
             fontFamily: theme.font,
             transition: "font-family 0.45s ease",
             animation: "fadeUp 0.6s 0.05s cubic-bezier(.4,0,.2,1) both",
+            fontSize: isMobile ? "clamp(18px, 6vw, 26px)" : "clamp(32px, 5vw, 42px)",
           }}
         >
           {/* "Welcome to" — plain white, shifts font with theme */}
@@ -519,7 +533,7 @@ export default function Landing() {
           variant="body1"
           style={{
             opacity: 0.6,
-            marginBottom: 52,
+            marginBottom: isMobile ? 32 : 52,
             fontFamily: theme.font,
             color: theme.subText,
             fontSize: "clamp(13px, 1.8vw, 15px)",
@@ -532,12 +546,12 @@ export default function Landing() {
         </Typography>
 
         {/* ——— CARDS ——— */}
-        <Grid container spacing={4} justifyContent="center" alignItems="center">
-          <Grid item xs={12} md={5} style={{ display:"flex", justifyContent:"center" }}>
+        <Grid container spacing={isMobile ? 2 : 4} justifyContent="center" alignItems="stretch">
+          <Grid item xs={12} sm={11} md={5} style={{ display:"flex", justifyContent:"center", minHeight: isMobile ? "auto" : "280px" }}>
             <div
               onMouseEnter={() => setHovered("cyber")}
               onMouseLeave={() => setHovered(null)}
-              style={{ width:"100%" }}
+              style={{ width:"100%", height: "100%" }}
             >
               <EntryCard
                 title="I'm a Recruiter"
@@ -547,15 +561,16 @@ export default function Landing() {
                 animClass="entry-anim-left"
                 shrink={hovered === "void"}
                 onClick={() => navigate("/professional")}
+                isMobile={isMobile}
               />
             </div>
           </Grid>
 
-          <Grid item xs={12} md={5} style={{ display:"flex", justifyContent:"center" }}>
+          <Grid item xs={12} sm={11} md={5} style={{ display:"flex", justifyContent:"center", minHeight: isMobile ? "auto" : "280px" }}>
             <div
               onMouseEnter={() => setHovered("void")}
               onMouseLeave={() => setHovered(null)}
-              style={{ width:"100%" }}
+              style={{ width:"100%", height: "100%" }}
             >
               <EntryCard
                 title="I'm an Explorer"
@@ -565,6 +580,7 @@ export default function Landing() {
                 animClass="entry-anim-right"
                 shrink={hovered === "cyber"}
                 onClick={() => navigate("/personal")}
+                isMobile={isMobile}
               />
             </div>
           </Grid>
