@@ -440,7 +440,7 @@ export default function Gallery() {
   ];
 
   return (
-    <div style={styles.page}>
+    <div className="gallery-page" style={styles.page}>
       <style>
         {`
           @keyframes slideIn {
@@ -706,7 +706,7 @@ function DestinationCard({ label, images, onImageClick }) {
       {/* Carousel */}
       <div style={{
         width: "100%",
-        height: 240,
+        height: "var(--dest-card-h, 240px)",
         borderRadius: 10,
         overflow: "hidden",
         marginBottom: 10,
@@ -926,9 +926,10 @@ const styles = {
   page: {
     backgroundColor: "#0d0a14",
     color: "#ffffff",
-    padding: "0% 5%",
+    padding: "0 var(--gallery-pad, 5%)",
     fontFamily: "'Inter', sans-serif",
-    height: "85%",
+    height: "auto",
+    minHeight: "100vh",
     overflow: "auto",
     position: "relative",
     zIndex: 1,
@@ -965,7 +966,7 @@ const styles = {
     color: "#c8b8a8",
   },
   section: {
-    marginBottom: 90,
+    marginBottom: "var(--section-gap, 90px)",
   },
   sectionHeader: {
     display: "flex",
@@ -984,17 +985,17 @@ const styles = {
   },
   dayGrid: {
     display: "grid",
-    gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
+    gridTemplateColumns: "repeat(auto-fit, minmax(var(--day-min, 200px), 1fr))",
     gap: 18,
   },
   travelGrid: {
     display: "grid",
-    gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
+    gridTemplateColumns: "repeat(auto-fit, minmax(var(--travel-min, 280px), 1fr))",
     gap: 20,
   },
   destinationGrid: {
     display: "grid",
-    gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))",
+    gridTemplateColumns: "repeat(auto-fit, minmax(var(--dest-min, 260px), 1fr))",
     gap: 18,
   },
   destinationCard: {
@@ -1045,15 +1046,15 @@ const styles = {
   },
   imgPlaceholder: {
     width: "100%",
-    height: 210,
+    height: "var(--img-placeholder-h, 210px)",
     borderRadius: 12,
     overflow: "hidden",
   },
   twoCol: {
     display: "grid",
-    gridTemplateColumns: "1fr 1fr",
-    gap: 40,
-    marginBottom: 90,
+    gridTemplateColumns: "var(--two-col, 1fr 1fr)",
+    gap: "var(--two-col-gap, 40px)",
+    marginBottom: "var(--section-gap, 90px)",
   },
   bookImg: {
     width: 48,
@@ -1119,11 +1120,11 @@ const styles = {
   },
   lensGridUpdated: {
     display: "grid",
-    gridTemplateColumns: "repeat(2, 1fr)",
-    gap: 20,
+    gridTemplateColumns: "var(--lens-cols, repeat(2, 1fr))",
+    gap: "var(--lens-gap, 20px)",
   },
   lensCard: {
-    height: 380,
+    height: "var(--lens-card-h, 380px)",
     borderRadius: 14,
     overflow: "hidden",
     border: "1px solid rgba(255,255,255,0.08)",

@@ -84,7 +84,7 @@ function AmbientParticles() {
 
 export default function Fitness() {
   return (
-    <div style={styles.page}>
+    <div className="personal-page fitness-page" style={styles.page}>
       <Grain />
       <AmbientParticles />
 
@@ -305,9 +305,10 @@ const styles = {
   page: {
     backgroundColor: "#0d0a14",
     color: "#ffffff",
-    padding: "0% 5%",
+    padding: "0 var(--personal-pad, 5%)",
     fontFamily: "'Inter', sans-serif",
-    height: "85%",
+    height: "auto",
+    minHeight: "100vh",
     overflow: "auto",
     position: "relative",
     zIndex: 1,
@@ -345,14 +346,14 @@ const styles = {
   },
   statsGrid: {
     display: "grid",
-    gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))",
+    gridTemplateColumns: "repeat(auto-fit, minmax(var(--fitness-stats-min, 180px), 1fr))",
     gap: 16,
     marginBottom: 70,
   },
   twoCol: {
     display: "grid",
-    gridTemplateColumns: "2fr 1fr",
-    gap: 40,
+    gridTemplateColumns: "var(--fitness-two-cols, 2fr 1fr)",
+    gap: "var(--fitness-two-gap, 40px)",
     marginBottom: 80,
   },
   habitBox: {
@@ -381,7 +382,7 @@ const styles = {
   quote: {
     textAlign: "center",
     marginBottom: 80,
-    padding: "0 10%",
+    padding: "var(--fitness-quote-pad, 0 10%)",
   },
   quoteText: {
     fontStyle: "italic",

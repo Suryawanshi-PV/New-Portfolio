@@ -18,9 +18,315 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* Gallery responsive tokens */
+.gallery-page {
+  --gallery-pad: 5%;
+  --section-gap: 90px;
+  --two-col: 1fr 1fr;
+  --two-col-gap: 40px;
+  --lens-cols: repeat(2, 1fr);
+  --lens-gap: 20px;
+  --lens-card-h: 380px;
+  --img-placeholder-h: 210px;
+  --dest-card-h: 240px;
+  --day-min: 200px;
+  --travel-min: 280px;
+  --dest-min: 260px;
+}
+
+@media (max-width: 1024px) {
+  .gallery-page {
+    --gallery-pad: 4%;
+    --section-gap: 70px;
+    --two-col: 1fr;
+    --two-col-gap: 28px;
+    --lens-cols: 1fr;
+    --lens-card-h: 320px;
+    --img-placeholder-h: 200px;
+    --dest-card-h: 220px;
+    --day-min: 180px;
+    --travel-min: 240px;
+    --dest-min: 220px;
+  }
+}
+
+@media (max-width: 640px) {
+  .gallery-page {
+    --gallery-pad: 4%;
+    --section-gap: 56px;
+    --two-col-gap: 24px;
+    --lens-card-h: 260px;
+    --img-placeholder-h: 180px;
+    --dest-card-h: 200px;
+    --day-min: 160px;
+    --travel-min: 200px;
+    --dest-min: 180px;
+  }
+}
+
+/* Personal layout + pages responsive tokens */
+.personal-layout {
+  --personal-pad: 5%;
+  --header-h: 84px;
+  --header-pos: static;
+  --logo-h: 90px;
+  --tabs-gap: 12px;
+  --tabs-wrap: nowrap;
+  --tabs-overflow: visible;
+  --tabs-justify: flex-end;
+  --tabs-width: auto;
+  --tabs-display: flex;
+  --tabs-position: static;
+  --tabs-top: auto;
+  --tabs-left: auto;
+  --tabs-right: auto;
+  --tabs-bg: transparent;
+  --tabs-pad: 0;
+  --tabs-border: none;
+  --tabs-radius: 0;
+  --tabs-shadow: none;
+  --menu-display: none;
+  --menu-pos: static;
+  --menu-top: auto;
+  --menu-right: auto;
+  --menu-align: auto;
+  --header-dir: row;
+  --header-align: center;
+  --header-justify: space-between;
+  --header-gap: 0px;
+  --header-pad-y: 0px;
+  --tab-pad: 8px 18px;
+  --tab-font: 15px;
+}
+
+.personal-page {
+  --personal-pad: 5%;
+}
+
+.home-page {
+  --home-hero-cols: 1.2fr 1fr;
+  --home-hero-gap: 60px;
+  --home-hero-left-order: 0;
+  --home-hero-right-order: 0;
+  --home-hero-right-justify: flex-end;
+  --home-profile-w: 280px;
+  --home-profile-h: 340px;
+  --home-status-min: 170px;
+  --home-content-cols: 1fr 1fr;
+  --home-content-gap: 56px;
+  --home-fit-cols: 1fr 1fr;
+  --home-image-cols: 1fr 1fr;
+  --home-life-img-h: 150px;
+  --home-footer-dir: row;
+  --home-footer-align: center;
+  --home-footer-gap: 18px;
+  --home-footer-text: left;
+  --home-section-gap: 80px;
+}
+
+.fitness-page {
+  --fitness-stats-min: 180px;
+  --fitness-two-cols: 2fr 1fr;
+  --fitness-two-gap: 40px;
+  --fitness-quote-pad: 0 10%;
+}
+
+.journal-page {
+  --journal-layout-cols: 260px 1fr;
+  --journal-layout-gap: 56px;
+  --journal-posts-cols: 1fr 1fr;
+  --journal-featured-pad: 28px 32px;
+  --journal-sidebar-pos: sticky;
+  --journal-sidebar-top: 0px;
+  --journal-main-max: 100%;
+  --journal-sub-max: 700px;
+}
+
+/* Professional layout responsive tokens */
+.professional-layout {
+  --prof-header-pos: static;
+  --prof-tabs-display: flex;
+  --prof-menu-display: none;
+  --prof-menu-pos: static;
+  --prof-menu-top: auto;
+  --prof-menu-right: auto;
+  --prof-menu-panel-display: none;
+  --prof-menu-panel-pos: absolute;
+  --prof-menu-panel-top: calc(100% + 10px);
+  --prof-menu-panel-left: 0px;
+  --prof-menu-panel-right: 0px;
+}
+
+@media (max-width: 1024px) {
+  .professional-layout {
+    --prof-header-pos: relative;
+    --prof-tabs-display: none;
+    --prof-menu-display: inline-flex;
+    --prof-menu-pos: absolute;
+    --prof-menu-top: 10px;
+    --prof-menu-right: 4%;
+    --prof-menu-panel-display: none;
+    --prof-menu-panel-top: calc(100% + 8px);
+    --prof-menu-panel-left: 0px;
+    --prof-menu-panel-right: 0px;
+  }
+  .personal-layout {
+    --personal-pad: 4%;
+    --header-h: 72px;
+    --header-pos: relative;
+    --logo-h: 64px;
+    --tabs-gap: 10px;
+    --tabs-justify: flex-start;
+    --tabs-width: 100%;
+    --header-dir: row;
+    --header-align: center;
+    --header-justify: space-between;
+    --header-gap: 0px;
+    --header-pad-y: 10px;
+    --tab-pad: 7px 16px;
+    --tab-font: 14px;
+    --tabs-display: none;
+    --menu-display: inline-flex;
+    --tabs-overflow: hidden;
+    --tabs-position: absolute;
+    --tabs-top: calc(100% + 8px);
+    --tabs-left: 0px;
+    --tabs-right: 0px;
+    --tabs-bg: rgba(13, 10, 20, 0.96);
+    --tabs-pad: 12px;
+    --tabs-border: 1px solid rgba(255, 255, 255, 0.08);
+    --tabs-radius: 12px;
+    --tabs-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
+    --menu-pos: absolute;
+    --menu-top: 10px;
+    --menu-right: var(--personal-pad);
+  }
+
+  .personal-page {
+    --personal-pad: 4%;
+  }
+
+  .home-page {
+    --home-hero-cols: 1fr;
+    --home-hero-gap: 32px;
+    --home-hero-left-order: 1;
+    --home-hero-right-order: 2;
+    --home-hero-right-justify: center;
+    --home-profile-w: 240px;
+    --home-profile-h: 300px;
+    --home-status-min: 160px;
+    --home-content-cols: 1fr;
+    --home-content-gap: 32px;
+    --home-fit-cols: 1fr 1fr;
+    --home-image-cols: 1fr 1fr;
+    --home-footer-dir: column;
+    --home-footer-align: flex-start;
+    --home-footer-gap: 10px;
+    --home-footer-text: left;
+    --home-section-gap: 70px;
+  }
+
+  .fitness-page {
+    --fitness-stats-min: 160px;
+    --fitness-two-cols: 1fr;
+    --fitness-two-gap: 28px;
+    --fitness-quote-pad: 0 4%;
+  }
+
+  .journal-page {
+    --journal-layout-cols: 1fr;
+    --journal-layout-gap: 28px;
+    --journal-posts-cols: 1fr;
+    --journal-featured-pad: 22px 22px;
+    --journal-sidebar-pos: static;
+    --journal-sub-max: 100%;
+  }
+}
+
+@media (max-width: 640px) {
+  .professional-layout {
+    --prof-menu-right: 4%;
+  }
+  .personal-layout {
+    --personal-pad: 4%;
+    --header-h: 68px;
+    --header-pos: relative;
+    --logo-h: 52px;
+    --tabs-gap: 8px;
+    --tabs-wrap: nowrap;
+    --tabs-overflow: hidden;
+    --tabs-justify: flex-start;
+    --tabs-width: 100%;
+    --header-dir: row;
+    --header-align: center;
+    --header-justify: space-between;
+    --header-gap: 0px;
+    --header-pad-y: 10px;
+    --tab-pad: 6px 12px;
+    --tab-font: 13px;
+    --tabs-display: none;
+    --menu-display: inline-flex;
+    --tabs-position: absolute;
+    --tabs-top: calc(100% + 8px);
+    --tabs-left: 0px;
+    --tabs-right: 0px;
+    --tabs-bg: rgba(13, 10, 20, 0.98);
+    --tabs-pad: 10px;
+    --tabs-border: 1px solid rgba(255, 255, 255, 0.08);
+    --tabs-radius: 12px;
+    --tabs-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
+    --menu-pos: absolute;
+    --menu-top: 10px;
+    --menu-right: var(--personal-pad);
+  }
+
+  .personal-page {
+    --personal-pad: 4%;
+  }
+
+  .home-page {
+    --home-profile-w: 200px;
+    --home-profile-h: 250px;
+    --home-status-min: 140px;
+    --home-fit-cols: 1fr;
+    --home-image-cols: 1fr;
+    --home-life-img-h: 130px;
+    --home-section-gap: 56px;
+  }
+
+  .fitness-page {
+    --fitness-stats-min: 140px;
+    --fitness-quote-pad: 0 2%;
+  }
+
+  .journal-page {
+    --journal-layout-gap: 20px;
+    --journal-featured-pad: 18px 18px;
+  }
+}
+
+@media (max-width: 1024px) {
+  .personal-tabs {
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+  }
+
+  .personal-tabs.is-open {
+    --tabs-display: flex;
+  }
+}
+
+@media (max-width: 1024px) {
+  .professional-menu.is-open {
+    --prof-menu-panel-display: flex;
+  }
+}
+
 #root {
   display: flex;
   flex-direction: column;
+  overflow: hidden;
   /* min-height: 100vh; */
 }
 

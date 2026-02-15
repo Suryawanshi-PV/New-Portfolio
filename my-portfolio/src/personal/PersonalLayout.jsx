@@ -19,42 +19,12 @@ import PsLogo from "../Assects/LOGO.png";
       "display=swap";
     document.head.appendChild(f);
   }
-  
-  // Custom Scrollbar (Warm Amber style)
-  if (!document.getElementById("__personal_scrollbar__")) {
-    const s = document.createElement("style");
-    s.id = "__personal_scrollbar__";
-    s.textContent = `
-      /* Webkit browsers (Chrome, Safari, Edge) */
-      #personal-container::-webkit-scrollbar {
-        width: 12px;
-      }
-      #personal-container::-webkit-scrollbar-track {
-        background: rgba(13,10,20,0.5);
-        border-left: 1px solid rgba(240,160,69,0.1);
-      }
-      #personal-container::-webkit-scrollbar-thumb {
-        background: linear-gradient(180deg, rgba(240,160,69,0.5), rgba(240,160,69,0.3));
-        border-radius: 6px;
-        border: 2px solid rgba(13,10,20,0.5);
-      }
-      #personal-container::-webkit-scrollbar-thumb:hover {
-        background: linear-gradient(180deg, rgba(240,160,69,0.7), rgba(240,160,69,0.5));
-      }
-      
-      /* Firefox */
-      #personal-container {
-        scrollbar-width: thin;
-        scrollbar-color: rgba(240,160,69,0.5) rgba(13,10,20,0.5);
-      }
-    `;
-    document.head.appendChild(s);
-  }
 })();
 
 export default function PersonalLayout() {
   const navigate = useNavigate();
   const location = useLocation();
+  const [menuOpen, setMenuOpen] = useState(false);
 
   // Determine active tab based on current path
   const getTabValue = () => {
@@ -70,25 +40,46 @@ export default function PersonalLayout() {
   const paths = ["/personal", "/personal/journal", "/personal/fitness", "/personal/gallery"];
   const disabledTabs = new Set(["Fitness"]);
   const activeTab = getTabValue();
+  const handleNavigate = (path) => {
+    navigate(path);
+    setMenuOpen(false);
+  };
 
   return (
-    <div id="personal-container" style={styles.container}>
+    <div id="personal-container" className="personal-layout" style={styles.container}>
       {/* Navigation Header */}
       <div style={styles.header}>
         <img
           src={PsLogo}
-          onClick={() => navigate("/")}
+          onClick={() => handleNavigate("/")}
           alt="Logo"
           style={styles.logo}
         />
 
-        <div style={styles.tabs}>
+        <button
+          type="button"
+          className="personal-menu-btn"
+          onClick={() => setMenuOpen((prev) => !prev)}
+          aria-expanded={menuOpen}
+          aria-controls="personal-nav"
+          style={styles.menuButton}
+        >
+          <span style={styles.menuIcon} />
+          <span style={styles.menuIcon} />
+          <span style={styles.menuIcon} />
+        </button>
+
+        <div
+          id="personal-nav"
+          className={`personal-tabs${menuOpen ? " is-open" : ""}`}
+          style={styles.tabs}
+        >
           {tabs.map((tab, i) => (
             <TabButton
               key={tab}
               active={activeTab === i}
               disabled={disabledTabs.has(tab)}
-              onClick={() => navigate(paths[i])}
+              onClick={() => handleNavigate(paths[i])}
             >
               {tab}
             </TabButton>
@@ -134,16 +125,17 @@ function TabButton({ active, disabled, onClick, children }) {
           : active
             ? "1px solid rgba(240,160,69,0.3)"
             : "1px solid transparent",
-        padding: "8px 18px",
+        padding: "var(--tab-pad, 8px 18px)",
         borderRadius: 8,
         fontFamily: "'Rajdhani', sans-serif",
-        fontSize: 15,
+        fontSize: "var(--tab-font, 15px)",
         fontWeight: 600,
         cursor: disabled ? "default" : "pointer",
         transition: "all 0.25s ease",
         letterSpacing: 0.3,
         opacity: disabled ? 0.7 : 1,
         filter: disabled ? "blur(0.4px)" : "none",
+        whiteSpace: "nowrap",
       }}
     >
       {children}
@@ -159,6 +151,7 @@ const styles = {
     backgroundColor: "#0d0a14",
     color: "#fff",
     height: "100%",
+    minHeight: "100vh",
     width: "100%",
     display: "flex",
     flexDirection: "column",
@@ -168,21 +161,64 @@ const styles = {
       "#0d0a14",
   },
   header: {
-    height: "10%",
+    minHeight: "var(--header-h, 84px)",
     borderBottom: "1px solid rgba(255,255,255,0.06)",
     display: "flex",
+    position: "var(--header-pos, static)",
     alignItems: "center",
-    justifyContent: "space-between",
-    padding: "0 5%",
+    justifyContent: "var(--header-justify, space-between)",
+    padding: "var(--header-pad-y, 0px) var(--personal-pad, 5%)",
+    flexDirection: "var(--header-dir, row)",
+    alignItems: "var(--header-align, center)",
+    gap: "var(--header-gap, 0px)",
   },
   logo: {
-    height: 90,
+    height: "var(--logo-h, 90px)",
     width: "auto",
     cursor: "pointer",
     transition: "opacity 0.2s ease",
   },
   tabs: {
-    display: "flex",
-    gap: 12,
+    display: "var(--tabs-display, flex)",
+    gap: "var(--tabs-gap, 12px)",
+    flexWrap: "var(--tabs-wrap, nowrap)",
+    overflowX: "var(--tabs-overflow, visible)",
+    justifyContent: "var(--tabs-justify, flex-end)",
+    width: "var(--tabs-width, auto)",
+    WebkitOverflowScrolling: "touch",
+    position: "var(--tabs-position, static)",
+    top: "var(--tabs-top, auto)",
+    left: "var(--tabs-left, auto)",
+    right: "var(--tabs-right, auto)",
+    background: "var(--tabs-bg, transparent)",
+    padding: "var(--tabs-pad, 0)",
+    border: "var(--tabs-border, none)",
+    borderRadius: "var(--tabs-radius, 0)",
+    boxShadow: "var(--tabs-shadow, none)",
+    zIndex: 5,
+  },
+  menuButton: {
+    display: "var(--menu-display, none)",
+    position: "var(--menu-pos, static)",
+    top: "var(--menu-top, auto)",
+    right: "var(--menu-right, auto)",
+    alignSelf: "var(--menu-align, auto)",
+    alignItems: "center",
+    justifyContent: "center",
+    gap: 4,
+    width: 38,
+    height: 36,
+    borderRadius: 10,
+    border: "1px solid rgba(255,255,255,0.12)",
+    background: "rgba(255,255,255,0.04)",
+    cursor: "pointer",
+    padding: 0,
+  },
+  menuIcon: {
+    width: 18,
+    height: 2,
+    borderRadius: 2,
+    background: "rgba(240,160,69,0.9)",
+    display: "block",
   },
 };

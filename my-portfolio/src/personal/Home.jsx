@@ -244,7 +244,7 @@ function Metric({ label, value }) {
    ============================================================ */
 export default function Home() {
   return (
-    <div style={styles.page}>
+    <div className="personal-page home-page" style={styles.page}>
       {/* atmosphere layers */}
       <Grain />
       <AmbientParticles />
@@ -414,9 +414,10 @@ const styles = {
   page: {
     backgroundColor: "#0d0a14",
     color: "#ffffff",
-    padding: "0% 5%",
+    padding: "0 var(--personal-pad, 5%)",
     fontFamily: "'Inter', sans-serif",
-    height: "85%",
+    height: "auto",
+    minHeight: "100vh",
     overflow: "auto",
     position: "relative",
     zIndex: 1,
@@ -429,12 +430,17 @@ const styles = {
   /* hero */
   hero: {
     display: "grid",
-    gridTemplateColumns: "1.2fr 1fr",
-    gap: 60,
-    marginBottom: 80,
+    gridTemplateColumns: "var(--home-hero-cols, 1.2fr 1fr)",
+    gap: "var(--home-hero-gap, 60px)",
+    marginBottom: "var(--home-section-gap, 80px)",
     paddingTop: "clamp(24px, 4vw, 48px)",
   },
-  heroLeft: { display:"flex", flexDirection:"column", justifyContent:"center" },
+  heroLeft: {
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    order: "var(--home-hero-left-order, 0)",
+  },
 
   heroBadge: {
     display:"inline-flex", alignItems:"center", gap:8,
@@ -478,8 +484,9 @@ const styles = {
 
   heroRight: {
     display:"flex",
-    justifyContent:"flex-end",
+    justifyContent:"var(--home-hero-right-justify, flex-end)",
     alignItems:"center",
+    order: "var(--home-hero-right-order, 0)",
   },
   profileFrame: {
     position:"relative",
@@ -489,8 +496,8 @@ const styles = {
     animation:"pulseGlow 3s ease infinite",
   },
   profileImg: {
-    width:280,
-    height:340,
+    width:"var(--home-profile-w, 280px)",
+    height:"var(--home-profile-h, 340px)",
     borderRadius:18,
     objectFit:"cover",
     display:"block",
@@ -500,17 +507,17 @@ const styles = {
   /* status grid */
   statusGrid: {
     display:"grid",
-    gridTemplateColumns:"repeat(auto-fit, minmax(170px, 1fr))",
+    gridTemplateColumns:"repeat(auto-fit, minmax(var(--home-status-min, 170px), 1fr))",
     gap:16,
-    marginBottom:72,
+    marginBottom:"var(--home-section-gap, 80px)",
   },
 
   /* content grid */
   contentGrid: {
     display:"grid",
-    gridTemplateColumns:"1fr 1fr",
-    gap:56,
-    marginBottom:90,
+    gridTemplateColumns:"var(--home-content-cols, 1fr 1fr)",
+    gap:"var(--home-content-gap, 56px)",
+    marginBottom:"var(--home-section-gap, 80px)",
   },
 
   sectionHeader: {
@@ -545,19 +552,19 @@ const styles = {
   },
   fitnessGrid: {
     display:"grid",
-    gridTemplateColumns:"1fr 1fr",
+    gridTemplateColumns:"var(--home-fit-cols, 1fr 1fr)",
     gap:"16px 12px",
   },
 
   /* image grid placeholders */
   imageGrid: {
     display:"grid",
-    gridTemplateColumns:"1fr 1fr",
+    gridTemplateColumns:"var(--home-image-cols, 1fr 1fr)",
     gap:12,
   },
   lifeImg: {
     width:"100%",
-    height:150,
+    height:"var(--home-life-img-h, 150px)",
     borderRadius:12,
     background:"linear-gradient(135deg, rgba(240,160,69,0.06), rgba(167,139,250,0.04))",
     border:"1px solid rgba(255,255,255,0.06)",
@@ -579,6 +586,9 @@ const styles = {
     paddingBottom:16,
     display:"flex",
     justifyContent:"space-between",
-    alignItems:"center",
+    flexDirection: "var(--home-footer-dir, row)",
+    alignItems:"var(--home-footer-align, center)",
+    gap: "var(--home-footer-gap, 18px)",
+    textAlign: "var(--home-footer-text, left)",
   },
 };

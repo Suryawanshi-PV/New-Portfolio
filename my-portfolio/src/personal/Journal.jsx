@@ -132,7 +132,7 @@ export default function Journal() {
     : recentPosts.filter((post) => post.category === activeCategory);
 
   return (
-    <div style={styles.page}>
+    <div className="personal-page journal-page" style={styles.page}>
       <Grain />
       <AmbientParticles />
 
@@ -389,9 +389,10 @@ const styles = {
   page: {
     backgroundColor: "#0d0a14",
     color: "#ffffff",
-    padding: "0% 5%",
+    padding: "0 var(--personal-pad, 5%)",
     fontFamily: "'Inter', sans-serif",
-    height: "85%",
+    height: "auto",
+    minHeight: "100vh",
     overflow: "auto",
     position: "relative",
     zIndex: 1,
@@ -402,13 +403,13 @@ const styles = {
   },
   layout: {
     display: "grid",
-    gridTemplateColumns: "260px 1fr",
-    gap: 56,
+    gridTemplateColumns: "var(--journal-layout-cols, 260px 1fr)",
+    gap: "var(--journal-layout-gap, 56px)",
     paddingTop: 24,
   },
   sidebar: {
-    position: "sticky",
-    top: 0,
+    position: "var(--journal-sidebar-pos, sticky)",
+    top: "var(--journal-sidebar-top, 0px)",
     height: "fit-content",
   },
   sidebarTitle: {
@@ -453,7 +454,7 @@ const styles = {
     transition: "transform 0.2s ease",
   },
   main: {
-    maxWidth: "100%",
+    maxWidth: "var(--journal-main-max, 100%)",
   },
   mainTitle: {
     fontSize: "clamp(30px, 4vw, 36px)",
@@ -464,7 +465,7 @@ const styles = {
   },
   mainSubtitle: {
     opacity: 0.6,
-    maxWidth: 700,
+    maxWidth: "var(--journal-sub-max, 700px)",
     lineHeight: 1.7,
     fontSize: 15,
     fontFamily: "'Inter', sans-serif",
@@ -475,7 +476,7 @@ const styles = {
     background: "rgba(255,255,255,0.03)",
     border: "1px solid rgba(240,160,69,0.14)",
     borderRadius: 16,
-    padding: "28px 32px",
+    padding: "var(--journal-featured-pad, 28px 32px)",
   },
   chip: {
     display: "inline-block",
@@ -548,7 +549,7 @@ const styles = {
   },
   postsGrid: {
     display: "grid",
-    gridTemplateColumns: "1fr 1fr",
+    gridTemplateColumns: "var(--journal-posts-cols, 1fr 1fr)",
     gap: 18,
   },
 };
