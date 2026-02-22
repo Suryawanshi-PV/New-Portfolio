@@ -475,11 +475,14 @@ export default function Gallery() {
       <section style={styles.section}>
         <SectionHeader title="A Typical Day" right="Based on last 30 days" />
         <div style={styles.dayGrid}>
-          <DayCard time="06:30 AM" title="Morning Ritual" desc="Ginger chai, meditation, and reading. No screens for first 30 mins." />
-          <DayCard time="09:00 AM" title="Deep Work" desc="Core development tasks. Focus mode on. Lo-fi beats playing." />
-          <DayCard time="01:00 PM" title="Ghar Ka Khana" desc="Homemade lunch. Reset the brain." />
-          <DayCard time="06:00 PM" title="Physical Grind" desc="Gym or run. Switching context from mental to physical stress." />
-          <DayCard time="09:00 PM" title="Learning & Leisure" desc="Side projects, reading fiction, or gaming. Wind down." />
+          <DayCard time="07:00 AM" title="Morning Ritual" desc="Wake up, freshen up, and ease into the day with intention." />
+          <DayCard time="09:00 AM" title="Workout Session" desc="Strength and movement to kick-start the day." />
+          <DayCard time="09:30 AM – 06:30 PM" title="Deep Work (Office)" desc="Focused office work, shipping tasks and solving core problems." />
+          <DayCard time="01:00 PM" title="Ghar Ka Khana" desc="Homemade lunch to reset and recharge." />
+          <DayCard time="06:30 PM" title="Classical Guitar Practice" desc="One hour of beautiful classical guitar practice after work." />
+          <DayCard time="08:00 PM" title="Dinner" desc="Dinner time with a calm transition into the night." />
+          <DayCard time="09:00 PM – 11:00 PM" title="Side Projects & Leisure" desc="Side projects, reading, anime, or gaming." />
+          <DayCard time="10:00 PM – 11:00 PM" title="Sleep" desc="Lights out depending on the day, usually between 10 and 11 PM." />
         </div>
       </section>
 
@@ -929,7 +932,7 @@ const styles = {
     padding: "0 var(--gallery-pad, 5%)",
     fontFamily: "'Inter', sans-serif",
     height: "auto",
-    minHeight: "100vh",
+    // minHeight: "100vh",
     overflow: "auto",
     position: "relative",
     zIndex: 1,

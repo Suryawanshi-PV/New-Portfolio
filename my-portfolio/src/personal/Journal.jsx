@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 
 
 /* ============================================================
@@ -117,6 +118,9 @@ const categoryOrder = [
 ];
 
 export default function Journal() {
+  const location = useLocation();
+  const navigate = useNavigate();
+  const recentPostsRef = useRef(null);
   const [activeCategory, setActiveCategory] = useState("All Posts");
   const categoryCounts = categoryOrder.reduce((acc, label) => {
     if (label === "All Posts") {
@@ -130,6 +134,15 @@ export default function Journal() {
   const filteredPosts = activeCategory === "All Posts"
     ? recentPosts
     : recentPosts.filter((post) => post.category === activeCategory);
+
+  useEffect(() => {
+    if (!location.state?.scrollToRecentPosts) return;
+
+    requestAnimationFrame(() => {
+      recentPostsRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+      navigate(location.pathname, { replace: true, state: {} });
+    });
+  }, [location.pathname, location.state, navigate]);
 
   return (
     <div className="personal-page journal-page" style={styles.page}>
@@ -300,7 +313,7 @@ export default function Journal() {
           )}
 
           {/* RECENT POSTS */}
-          <section style={{ marginTop:56 }}>
+          <section ref={recentPostsRef} style={{ marginTop:56, marginBottom:32 }}>
             <div style={styles.sectionHeader}>
               <h3 style={{ fontFamily:"'Rajdhani', sans-serif", fontSize:20, fontWeight:600, color:"#e8ddd0" }}>
                 Recent Posts
@@ -392,7 +405,7 @@ const styles = {
     padding: "0 var(--personal-pad, 5%)",
     fontFamily: "'Inter', sans-serif",
     height: "auto",
-    minHeight: "100vh",
+    // minHeight: "100vh",
     overflow: "auto",
     position: "relative",
     zIndex: 1,

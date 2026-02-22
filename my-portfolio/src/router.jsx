@@ -1,4 +1,4 @@
-import { createBrowserRouter } from "react-router-dom";
+import { createHashRouter } from "react-router-dom";
 import Landing from "./landing/Landing";
 import ProfessionalLayout from "./professional/ProfessionalLayout";
 import Overview from "./professional/Overview";
@@ -11,7 +11,7 @@ import Journal from "./personal/Journal";
 import Fitness from "./personal/Fitness";
 import Gallery from "./personal/Gallery";
 
-export const router = createBrowserRouter([
+export const router = createHashRouter([
   {
     path: "/",
     element: <Landing />,

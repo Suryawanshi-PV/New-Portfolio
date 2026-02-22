@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react";
+import { useNavigate } from "react-router-dom";
 import profileImgLogo from "../Assects/Me-GR.png";
 
 /* ============================================================
@@ -243,6 +244,16 @@ function Metric({ label, value }) {
    MAIN HOME
    ============================================================ */
 export default function Home() {
+  const navigate = useNavigate();
+
+  const goToRecentPosts = () => {
+    navigate("/personal/journal", { state: { scrollToRecentPosts: true } });
+  };
+
+  const goToGallery = () => {
+    navigate("/personal/gallery");
+  };
+
   return (
     <div className="personal-page home-page" style={styles.page}>
       {/* atmosphere layers */}
@@ -269,8 +280,8 @@ export default function Home() {
           </p>
 
           <div style={{ display:"flex", gap:12, flexWrap:"wrap" }}>
-            <HeroBtn primary>Read Latest</HeroBtn>
-            <HeroBtn>View Gallery</HeroBtn>
+            <HeroBtn primary onClick={goToRecentPosts}>Read Latest</HeroBtn>
+            <HeroBtn onClick={goToGallery}>View Gallery</HeroBtn>
           </div>
         </div>
 
@@ -354,10 +365,11 @@ export default function Home() {
 /* ============================================================
    HERO BUTTON
    ============================================================ */
-function HeroBtn({ children, primary }) {
+function HeroBtn({ children, primary, onClick }) {
   const [hover, setHover] = useState(false);
   return (
     <button
+      onClick={onClick}
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
       style={{

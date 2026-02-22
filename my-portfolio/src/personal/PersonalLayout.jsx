@@ -1,6 +1,9 @@
 import { Outlet, useNavigate, useLocation } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import PsLogo from "../Assects/LOGO.png";
+
+const PERSONAL_BG_VIDEO_ID = "Kk60F8a7-Jw";
+const PERSONAL_BG_VOLUME = 14;
 
 
 /* ============================================================
@@ -25,6 +28,8 @@ export default function PersonalLayout() {
   const navigate = useNavigate();
   const location = useLocation();
   const [menuOpen, setMenuOpen] = useState(false);
+  const playerHostRef = useRef(null);
+  const playerRef = useRef(null);
 
   // Determine active tab based on current path
   const getTabValue = () => {
@@ -45,8 +50,116 @@ export default function PersonalLayout() {
     setMenuOpen(false);
   };
 
+  useEffect(() => {
+    let mounted = true;
+
+    const unlockAudio = () => {
+      const player = playerRef.current;
+      if (!player || typeof player.unMute !== "function") return;
+      try {
+        player.unMute();
+        player.setVolume(PERSONAL_BG_VOLUME);
+        player.playVideo();
+      } catch {
+      }
+    };
+
+    const unlockEvents = ["pointerdown", "keydown", "touchstart"];
+    unlockEvents.forEach((eventName) => {
+      window.addEventListener(eventName, unlockAudio, { once: true });
+    });
+
+    const createPlayer = () => {
+      if (!mounted || !playerHostRef.current || !window.YT?.Player) return;
+      if (playerRef.current) return;
+
+      playerRef.current = new window.YT.Player(playerHostRef.current, {
+        videoId: PERSONAL_BG_VIDEO_ID,
+        playerVars: {
+          autoplay: 1,
+          controls: 0,
+          disablekb: 1,
+          playsinline: 1,
+          rel: 0,
+          loop: 1,
+          playlist: PERSONAL_BG_VIDEO_ID,
+          modestbranding: 1,
+          mute: 1,
+        },
+        events: {
+          onReady: (event) => {
+            try {
+              event.target.setVolume(PERSONAL_BG_VOLUME);
+              event.target.playVideo();
+            } catch {
+            }
+          },
+          onStateChange: (event) => {
+            if (window.YT?.PlayerState?.ENDED === event.data) {
+              try {
+                event.target.playVideo();
+              } catch {
+              }
+            }
+          },
+        },
+      });
+    };
+
+    const loadYouTubeApi = () => {
+      if (window.YT?.Player) {
+        createPlayer();
+        return;
+      }
+
+      const existingScript = document.getElementById("__yt_iframe_api__");
+      if (!existingScript) {
+        const script = document.createElement("script");
+        script.id = "__yt_iframe_api__";
+        script.src = "https://www.youtube.com/iframe_api";
+        document.body.appendChild(script);
+      }
+
+      const previousReady = window.onYouTubeIframeAPIReady;
+      window.onYouTubeIframeAPIReady = () => {
+        if (typeof previousReady === "function") previousReady();
+        createPlayer();
+      };
+    };
+
+    loadYouTubeApi();
+
+    return () => {
+      mounted = false;
+      unlockEvents.forEach((eventName) => {
+        window.removeEventListener(eventName, unlockAudio);
+      });
+
+      const player = playerRef.current;
+      if (player && typeof player.destroy === "function") {
+        player.destroy();
+      }
+      playerRef.current = null;
+    };
+  }, []);
+
   return (
     <div id="personal-container" className="personal-layout" style={styles.container}>
+      <div
+        aria-hidden="true"
+        style={{
+          position: "fixed",
+          width: 1,
+          height: 1,
+          opacity: 0,
+          pointerEvents: "none",
+          left: -9999,
+          top: -9999,
+        }}
+      >
+        <div ref={playerHostRef} id="personal-bg-youtube-player" />
+      </div>
+
       {/* Navigation Header */}
       <div style={styles.header}>
         <img
